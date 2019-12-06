@@ -1,7 +1,6 @@
 package pl.edu.wat.wcy.model;
 
 import javax.persistence.*;
-import java.time.LocalDate;
 
 @Entity(name = "books")
 @Table(name = "books")
@@ -17,17 +16,21 @@ public class Book {
     @Column(name = "name", nullable = false)
     private String name;
 
-    @Column(name = "pages", nullable = false)
-    private int pages;
+    @Column(name = "publisher", nullable = false)
+    private String publisher;
 
-    @Column(name = "release_date", nullable = false)
-    private LocalDate releaseDate;
+    @Column(name = "release_year", nullable = false)
+    private int releaseYear;
 
-    public Book(String ISBN, String name, int pages, LocalDate releaseDate) {
+    protected Book() {
+        // empty
+    }
+
+    public Book(String ISBN, String name, String publisher, int releaseYear) {
         this.ISBN = ISBN;
         this.name = name;
-        this.pages = pages;
-        this.releaseDate = releaseDate;
+        this.publisher = publisher;
+        this.releaseYear = releaseYear;
     }
 
     public long getId() {
@@ -42,12 +45,12 @@ public class Book {
         return name;
     }
 
-    public int getPages() {
-        return pages;
+    public String getPublisher() {
+        return publisher;
     }
 
-    public LocalDate getReleaseDate() {
-        return releaseDate;
+    public int getReleaseYear() {
+        return releaseYear;
     }
 
 }

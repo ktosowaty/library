@@ -11,14 +11,18 @@ public class Reader {
     @GeneratedValue
     private long id;
 
-    @Column(name = "first_name", nullable = false, length = 50)
+    @Column(name = "first_name", nullable = false)
     private String firstName;
 
-    @Column(name = "last_name", nullable = false, length = 50)
+    @Column(name = "last_name", nullable = false)
     private String lastName;
 
     @Column(name = "birth_date", nullable = false)
     private LocalDate birthDate;
+
+    protected Reader() {
+        // empty
+    }
 
     public Reader(String firstName, String lastName, LocalDate birthDate) {
         this.firstName = firstName;

@@ -25,6 +25,10 @@ public class Borrow {
     @Column(name = "retrieve_date", nullable = false)
     private LocalDate retrieveDate;
 
+    protected Borrow() {
+        // empty
+    }
+
     public Borrow(Reader reader, Book book, LocalDate borrowDate, LocalDate retrieveDate) {
         this.reader = reader;
         this.book = book;

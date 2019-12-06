@@ -1,4 +1,4 @@
-package pl.edu.wat.wcy.model;
+package pl.edu.wat.wcy.postgres.model;
 
 import javax.persistence.*;
 import java.time.LocalDate;

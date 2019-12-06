@@ -1,9 +1,9 @@
-package pl.edu.wat.wcy.service;
+package pl.edu.wat.wcy.postgres.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import pl.edu.wat.wcy.model.Reader;
-import pl.edu.wat.wcy.repository.ReaderRepository;
+import pl.edu.wat.wcy.postgres.model.Reader;
+import pl.edu.wat.wcy.postgres.repository.ReaderRepository;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -17,14 +17,14 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 @Service
-public class ReaderGenerator {
+public class PostgresReaderGenerator {
 
-    private static final int READERS_LIMIT = 50000;
+    private static final int READERS_LIMIT = 10000;
 
     private final ReaderRepository readerRepository;
 
     @Autowired
-    public ReaderGenerator(ReaderRepository readerRepository) {
+    public PostgresReaderGenerator(ReaderRepository readerRepository) {
         this.readerRepository = readerRepository;
     }
 

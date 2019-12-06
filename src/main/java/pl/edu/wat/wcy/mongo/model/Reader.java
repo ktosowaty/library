@@ -1,23 +1,20 @@
-package pl.edu.wat.wcy.model;
+package pl.edu.wat.wcy.mongo.model;
 
-import javax.persistence.*;
+import org.springframework.data.mongodb.core.mapping.Document;
+
+import javax.persistence.Id;
 import java.time.LocalDate;
 
-@Entity(name = "readers")
-@Table(name = "readers")
+@Document
 public class Reader {
 
     @Id
-    @GeneratedValue
-    private long id;
+    private String id;
 
-    @Column(name = "first_name", nullable = false)
     private String firstName;
 
-    @Column(name = "last_name", nullable = false)
     private String lastName;
 
-    @Column(name = "birth_date", nullable = false)
     private LocalDate birthDate;
 
     protected Reader() {
@@ -30,7 +27,7 @@ public class Reader {
         this.birthDate = birthDate;
     }
 
-    public long getId() {
+    public String getId() {
         return id;
     }
 

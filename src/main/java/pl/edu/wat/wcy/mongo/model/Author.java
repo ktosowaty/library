@@ -1,20 +1,18 @@
-package pl.edu.wat.wcy.model;
+package pl.edu.wat.wcy.mongo.model;
 
-import javax.persistence.*;
+import org.springframework.data.mongodb.core.mapping.Document;
+
+import javax.persistence.Id;
 import java.time.LocalDate;
 
-@Entity(name = "authors")
-@Table(name = "authors")
+@Document
 public class Author {
 
     @Id
-    @GeneratedValue
-    private long id;
+    private String id;
 
-    @Column(name = "name", nullable = false)
     private String name;
 
-    @Column(name = "birth_date", nullable = false)
     private LocalDate birthDate;
 
     protected Author() {
@@ -26,7 +24,7 @@ public class Author {
         this.birthDate = birthDate;
     }
 
-    public long getId() {
+    public String getId() {
         return id;
     }
 

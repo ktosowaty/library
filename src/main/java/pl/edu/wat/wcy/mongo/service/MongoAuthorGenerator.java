@@ -1,13 +1,9 @@
-package pl.edu.wat.wcy.service;
+package pl.edu.wat.wcy.mongo.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import pl.edu.wat.wcy.model.Author;
-import pl.edu.wat.wcy.model.Book;
-import pl.edu.wat.wcy.model.BookAuthor;
-import pl.edu.wat.wcy.repository.AuthorRepository;
-import pl.edu.wat.wcy.repository.BookAuthorRepository;
-import pl.edu.wat.wcy.repository.BookRepository;
+import pl.edu.wat.wcy.mongo.model.Author;
+import pl.edu.wat.wcy.mongo.repository.MongoAuthorRepository;
 
 import java.io.IOException;
 import java.nio.charset.Charset;
@@ -20,18 +16,13 @@ import java.util.concurrent.ThreadLocalRandom;
 import java.util.stream.Stream;
 
 @Service
-public class BookAuthorGenerator {
+public class MongoAuthorGenerator {
 
-    private final BookAuthorRepository bookAuthorRepository;
-    private final BookRepository bookRepository;
-    private final AuthorRepository authorRepository;
+    private final MongoAuthorRepository mongoAuthorRepository;
 
     @Autowired
-    public BookAuthorGenerator(BookAuthorRepository bookAuthorRepository, BookRepository bookRepository,
-                               AuthorRepository authorRepository) {
-        this.bookAuthorRepository = bookAuthorRepository;
-        this.bookRepository = bookRepository;
-        this.authorRepository = authorRepository;
+    public MongoAuthorGenerator(MongoAuthorRepository mongoAuthorRepository) {
+        this.mongoAuthorRepository = mongoAuthorRepository;
     }
 
     public void generate(int bookLimit) {
@@ -44,11 +35,7 @@ public class BookAuthorGenerator {
                     .limit(bookLimit)
                     .forEach(fields -> {
                         Author author = getAuthor(fields[2]);
-                        authorRepository.save(author);
-                        Book book = new Book(fields[0], fields[1], fields[4], Integer.parseInt(fields[3]));
-                        bookRepository.save(book);
-                        BookAuthor bookAuthor = new BookAuthor(book, author);
-                        bookAuthorRepository.save(bookAuthor);
+                        mongoAuthorRepository.save(author);
                     });
         } catch (IOException e) {
             e.printStackTrace();
@@ -56,7 +43,7 @@ public class BookAuthorGenerator {
     }
 
     private Author getAuthor(String authorName) {
-        Optional<Author> existingAuthor = authorRepository.findByName(authorName);
+        Optional<Author> existingAuthor = mongoAuthorRepository.findByName(authorName);
         return existingAuthor.orElseGet(() -> new Author(authorName, generateDate()));
     }
 

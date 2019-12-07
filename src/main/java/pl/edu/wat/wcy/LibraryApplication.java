@@ -4,10 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import pl.edu.wat.wcy.mongo.service.MongoAuthorGenerator;
-import pl.edu.wat.wcy.mongo.service.MongoBookGenerator;
-import pl.edu.wat.wcy.mongo.service.MongoBorrowGenerator;
-import pl.edu.wat.wcy.mongo.service.MongoReaderGenerator;
+import pl.edu.wat.wcy.mongo.service.MongoDataGenerator;
 import pl.edu.wat.wcy.postgres.service.PostgresBookAuthorGenerator;
 import pl.edu.wat.wcy.postgres.service.PostgresBorrowGenerator;
 import pl.edu.wat.wcy.postgres.service.PostgresReaderGenerator;
@@ -18,26 +15,17 @@ public class LibraryApplication implements CommandLineRunner {
     private final PostgresBookAuthorGenerator postgresBookAuthorGenerator;
     private final PostgresBorrowGenerator postgresBorrowGenerator;
     private final PostgresReaderGenerator postgresReaderGenerator;
-    private final MongoAuthorGenerator mongoAuthorGenerator;
-    private final MongoReaderGenerator mongoReaderGenerator;
-    private final MongoBookGenerator mongoBookGenerator;
-    private final MongoBorrowGenerator mongoBorrowGenerator;
+    private final MongoDataGenerator mongoDataGenerator;
 
     @Autowired
     public LibraryApplication(PostgresBookAuthorGenerator postgresBookAuthorGenerator,
                               PostgresBorrowGenerator postgresBorrowGenerator,
                               PostgresReaderGenerator postgresReaderGenerator,
-                              MongoAuthorGenerator mongoAuthorGenerator,
-                              MongoReaderGenerator mongoReaderGenerator,
-                              MongoBookGenerator mongoBookGenerator,
-                              MongoBorrowGenerator mongoBorrowGenerator) {
+                              MongoDataGenerator mongoDataGenerator) {
         this.postgresBookAuthorGenerator = postgresBookAuthorGenerator;
         this.postgresBorrowGenerator = postgresBorrowGenerator;
         this.postgresReaderGenerator = postgresReaderGenerator;
-        this.mongoAuthorGenerator = mongoAuthorGenerator;
-        this.mongoReaderGenerator = mongoReaderGenerator;
-        this.mongoBookGenerator = mongoBookGenerator;
-        this.mongoBorrowGenerator = mongoBorrowGenerator;
+        this.mongoDataGenerator = mongoDataGenerator;
     }
 
     public static void main(String[] args) {
@@ -48,12 +36,9 @@ public class LibraryApplication implements CommandLineRunner {
     public void run(String... args) {
         int bookLimit = 20000;
         int borrowLimit = 100000;
-//        postgresBookAuthorGenerator.generate(bookLimit);
-//        postgresReaderGenerator.generate();
-//        postgresBorrowGenerator.generate(borrowLimit);
-        mongoAuthorGenerator.generate(bookLimit);
-        mongoBookGenerator.generate(bookLimit);
-        mongoReaderGenerator.generate();
-        mongoBorrowGenerator.generate(borrowLimit);
+        postgresBookAuthorGenerator.generate(bookLimit);
+        postgresReaderGenerator.generate();
+        postgresBorrowGenerator.generate(borrowLimit);
+        mongoDataGenerator.generate(bookLimit, borrowLimit);
     }
 }

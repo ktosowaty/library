@@ -5,7 +5,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import javax.persistence.Id;
 import java.time.LocalDate;
 
-@Document
+@Document(collection = "borrows")
 public class Borrow {
 
     @Id

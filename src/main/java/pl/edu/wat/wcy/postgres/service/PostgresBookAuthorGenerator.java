@@ -4,9 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pl.edu.wat.wcy.postgres.model.Author;
 import pl.edu.wat.wcy.postgres.model.Book;
-import pl.edu.wat.wcy.postgres.model.BookAuthor;
 import pl.edu.wat.wcy.postgres.repository.AuthorRepository;
-import pl.edu.wat.wcy.postgres.repository.BookAuthorRepository;
 import pl.edu.wat.wcy.postgres.repository.BookRepository;
 
 import java.io.IOException;
@@ -22,14 +20,11 @@ import java.util.stream.Stream;
 @Service
 public class PostgresBookAuthorGenerator {
 
-    private final BookAuthorRepository bookAuthorRepository;
     private final BookRepository bookRepository;
     private final AuthorRepository authorRepository;
 
     @Autowired
-    public PostgresBookAuthorGenerator(BookAuthorRepository bookAuthorRepository, BookRepository bookRepository,
-                                       AuthorRepository authorRepository) {
-        this.bookAuthorRepository = bookAuthorRepository;
+    public PostgresBookAuthorGenerator(BookRepository bookRepository, AuthorRepository authorRepository) {
         this.bookRepository = bookRepository;
         this.authorRepository = authorRepository;
     }
@@ -45,10 +40,8 @@ public class PostgresBookAuthorGenerator {
                     .forEach(fields -> {
                         Author author = getAuthor(fields[2]);
                         authorRepository.save(author);
-                        Book book = new Book(fields[0], fields[1], fields[4], Integer.parseInt(fields[3]));
+                        Book book = new Book(fields[0], fields[1], fields[4], Integer.parseInt(fields[3]), author);
                         bookRepository.save(book);
-                        BookAuthor bookAuthor = new BookAuthor(book, author);
-                        bookAuthorRepository.save(bookAuthor);
                     });
         } catch (IOException e) {
             e.printStackTrace();

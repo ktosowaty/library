@@ -41,7 +41,9 @@ public class PostgresReaderGenerator {
 
     private List<String> getNames(Path path) {
         try (Stream<String> stream = Files.lines(path)) {
-            return stream.limit(READERS_LIMIT).collect(Collectors.toList());
+            return stream.limit(READERS_LIMIT)
+                    .map(name -> name.substring(0, 1).toUpperCase() + name.substring(1))
+                    .collect(Collectors.toList());
         } catch (IOException e) {
             e.printStackTrace();
             return Collections.emptyList();

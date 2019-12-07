@@ -1,15 +1,6 @@
 package pl.edu.wat.wcy.mongo.model;
 
-import org.springframework.data.mongodb.core.mapping.Document;
-
-import javax.persistence.Id;
-import java.util.List;
-
-@Document(collation = "books")
 public class Book {
-
-    @Id
-    private long id;
 
     private String ISBN;
 
@@ -19,22 +10,18 @@ public class Book {
 
     private int releaseYear;
 
-    private List<Author> authors;
+    private Author author;
 
     protected Book() {
         // empty
     }
 
-    public Book(String ISBN, String name, String publisher, int releaseYear, List<Author> authors) {
+    public Book(String ISBN, String name, String publisher, int releaseYear, Author author) {
         this.ISBN = ISBN;
         this.name = name;
         this.publisher = publisher;
         this.releaseYear = releaseYear;
-        this.authors = authors;
-    }
-
-    public long getId() {
-        return id;
+        this.author = author;
     }
 
     public String getISBN() {
@@ -53,8 +40,7 @@ public class Book {
         return releaseYear;
     }
 
-    public List<Author> getAuthors() {
-        return authors;
+    public Author getAuthor() {
+        return author;
     }
-
 }

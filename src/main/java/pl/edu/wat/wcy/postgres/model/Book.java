@@ -22,15 +22,20 @@ public class Book {
     @Column(name = "release_year", nullable = false)
     private int releaseYear;
 
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "author_id")
+    private Author author;
+
     protected Book() {
         // empty
     }
 
-    public Book(String ISBN, String name, String publisher, int releaseYear) {
+    public Book(String ISBN, String name, String publisher, int releaseYear, Author author) {
         this.ISBN = ISBN;
         this.name = name;
         this.publisher = publisher;
         this.releaseYear = releaseYear;
+        this.author = author;
     }
 
     public long getId() {
@@ -51,6 +56,10 @@ public class Book {
 
     public int getReleaseYear() {
         return releaseYear;
+    }
+
+    public Author getAuthor() {
+        return author;
     }
 
 }

@@ -35,7 +35,7 @@ public class LibraryApplication implements CommandLineRunner {
     @Override
     public void run(String... args) {
         int bookLimit = 20000;
-        int borrowLimit = 100000;
+        int borrowLimit = 500000;
         postgresBookAuthorGenerator.generate(bookLimit);
         postgresReaderGenerator.generate();
         postgresBorrowGenerator.generate(borrowLimit);

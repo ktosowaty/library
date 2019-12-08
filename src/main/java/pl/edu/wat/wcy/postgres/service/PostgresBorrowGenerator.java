@@ -37,22 +37,23 @@ public class PostgresBorrowGenerator {
                 Book book = books.get(ThreadLocalRandom.current().nextInt(books.size()));
                 LocalDate borrowDate = generateDate();
                 LocalDate retrieveDate = generateDate(borrowDate);
-                Borrow borrow = new Borrow(reader, book, borrowDate, retrieveDate);
+                int rating = ThreadLocalRandom.current().nextInt(1, 6);
+                Borrow borrow = new Borrow(reader, book, borrowDate, retrieveDate, rating);
                 borrowRepository.save(borrow);
             }
         }
     }
 
     private LocalDate generateDate() {
-        long minDay = LocalDate.of(2000, 1, 1).toEpochDay();
-        long maxDay = LocalDate.of(2019, 10, 15).toEpochDay();
+        long minDay = LocalDate.of(2005, 1, 1).toEpochDay();
+        long maxDay = LocalDate.of(2015, 10, 15).toEpochDay();
         long randomDay = ThreadLocalRandom.current().nextLong(minDay, maxDay);
         return LocalDate.ofEpochDay(randomDay);
     }
 
     private LocalDate generateDate(LocalDate minDate) {
         long minDay = minDate.toEpochDay();
-        long maxDay = LocalDate.of(2019, 10, 15).toEpochDay();
+        long maxDay = LocalDate.of(2015, 10, 15).toEpochDay();
         long randomDay = ThreadLocalRandom.current().nextLong(minDay, maxDay);
         return LocalDate.ofEpochDay(randomDay);
     }

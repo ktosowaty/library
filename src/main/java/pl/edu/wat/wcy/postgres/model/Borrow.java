@@ -25,15 +25,19 @@ public class Borrow {
     @Column(name = "retrieve_date", nullable = false)
     private LocalDate retrieveDate;
 
+    @Column(name = "rating", nullable = false)
+    private int rating;
+
     protected Borrow() {
         // empty
     }
 
-    public Borrow(Reader reader, Book book, LocalDate borrowDate, LocalDate retrieveDate) {
+    public Borrow(Reader reader, Book book, LocalDate borrowDate, LocalDate retrieveDate, int rating) {
         this.reader = reader;
         this.book = book;
         this.borrowDate = borrowDate;
         this.retrieveDate = retrieveDate;
+        this.rating = rating;
     }
 
     public long getId() {
@@ -54,5 +58,9 @@ public class Borrow {
 
     public LocalDate getRetrieveDate() {
         return retrieveDate;
+    }
+
+    public int getRating() {
+        return rating;
     }
 }

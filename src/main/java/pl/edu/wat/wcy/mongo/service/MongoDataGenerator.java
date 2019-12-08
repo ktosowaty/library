@@ -46,7 +46,7 @@ public class MongoDataGenerator {
         List<String> lastNames = getNames(lastNamesPath);
         List<Reader> readers = new ArrayList<>();
         for (int i = 0; i < READERS_LIMIT; i++) {
-            Reader reader = new Reader(firstNames.get(i), lastNames.get(READERS_LIMIT - i - 1), generateDate());
+            Reader reader = new Reader(firstNames.get(i), lastNames.get(READERS_LIMIT - i - 1), generateReaderDate());
             readers.add(reader);
         }
         return readers;
@@ -90,7 +90,7 @@ public class MongoDataGenerator {
                 return existingAuthor;
             }
         }
-        return new Author(authorName, generateDate());
+        return new Author(authorName, generateAuthorDate());
     }
 
     private void generateBorrows(List<Reader> readers, List<Book> books, int borrowLimit) {
@@ -100,29 +100,37 @@ public class MongoDataGenerator {
                 Book book = books.get(ThreadLocalRandom.current().nextInt(books.size()));
                 LocalDate borrowDate = generateBorrowDate();
                 LocalDate retrieveDate = generateRetrieveDate(borrowDate);
-                Borrow borrow = new Borrow(book, reader, borrowDate, retrieveDate);
+                int rating = ThreadLocalRandom.current().nextInt(1, 6);
+                Borrow borrow = new Borrow(book, reader, borrowDate, retrieveDate, rating);
                 mongoBorrowRepository.save(borrow);
             }
         }
     }
 
     private LocalDate generateBorrowDate() {
-        long minDay = LocalDate.of(2000, 1, 1).toEpochDay();
-        long maxDay = LocalDate.of(2019, 10, 15).toEpochDay();
+        long minDay = LocalDate.of(2005, 1, 1).toEpochDay();
+        long maxDay = LocalDate.of(2015, 10, 15).toEpochDay();
         long randomDay = ThreadLocalRandom.current().nextLong(minDay, maxDay);
         return LocalDate.ofEpochDay(randomDay);
     }
 
     private LocalDate generateRetrieveDate(LocalDate minDate) {
         long minDay = minDate.toEpochDay();
-        long maxDay = LocalDate.of(2019, 10, 15).toEpochDay();
+        long maxDay = LocalDate.of(2015, 10, 15).toEpochDay();
         long randomDay = ThreadLocalRandom.current().nextLong(minDay, maxDay);
         return LocalDate.ofEpochDay(randomDay);
     }
 
-    private LocalDate generateDate() {
+    private LocalDate generateAuthorDate() {
         long minDay = LocalDate.of(1940, 1, 1).toEpochDay();
         long maxDay = LocalDate.of(2010, 12, 31).toEpochDay();
+        long randomDay = ThreadLocalRandom.current().nextLong(minDay, maxDay);
+        return LocalDate.ofEpochDay(randomDay);
+    }
+
+    private LocalDate generateReaderDate() {
+        long minDay = LocalDate.of(1980, 1, 1).toEpochDay();
+        long maxDay = LocalDate.of(2000, 12, 31).toEpochDay();
         long randomDay = ThreadLocalRandom.current().nextLong(minDay, maxDay);
         return LocalDate.ofEpochDay(randomDay);
     }

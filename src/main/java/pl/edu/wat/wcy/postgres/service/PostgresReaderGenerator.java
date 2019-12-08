@@ -51,8 +51,8 @@ public class PostgresReaderGenerator {
     }
 
     private LocalDate generateDate() {
-        long minDay = LocalDate.of(1940, 1, 1).toEpochDay();
-        long maxDay = LocalDate.of(2010, 12, 31).toEpochDay();
+        long minDay = LocalDate.of(1980, 1, 1).toEpochDay();
+        long maxDay = LocalDate.of(2000, 12, 31).toEpochDay();
         long randomDay = ThreadLocalRandom.current().nextLong(minDay, maxDay);
         return LocalDate.ofEpochDay(randomDay);
     }
